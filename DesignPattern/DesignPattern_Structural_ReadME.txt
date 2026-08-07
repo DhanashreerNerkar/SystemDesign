@@ -1,0 +1,10 @@
+Structural design pattern
+1. Adapter
+2. 
+
+*************************
+1. Adapter pattern: The Adapter Pattern lets two incompatible interfaces work together by wrapping one of them in a translator object. Imagine plugging a European appliance into a US outlet — you don't rebuild the appliance or the wall socket, you just use a plug adapter in between. In software, this happens constantly when integrating third-party APIs, legacy systems, or multiple data sources that each expose data in a different shape or format. Your application code is written against one clean, consistent interface, and each Adapter translates a specific external system's quirks into that shape. This means adding a new external system later only requires writing one new adapter — your core application logic never has to change. It's especially valuable when you don't control the external system's API (you can't ask a hospital's 20-year-old EHR system to change its data format for you).
+Real IT scenario: A payment system that needs to support Stripe, PayPal, and a legacy in-house billing API — each with a completely different method signature and response format — unified behind one PaymentGateway interface via three adapters.
+Simple everyday example: A universal power plug adapter — one socket shape on the wall, a different plug shape on your laptop charger, and the adapter sits in between so both sides don't need to change.
+When/where to use it (healthcare AI, complex scenario)
+Your platform pulls patient vitals from three completely different sources: Apple HealthKit (JSON with nested metrics arrays), the lab-report platform (returns XML with lab-specific codes), and patient-entered manual data (a simple form dict). Your prediction model and chatbot shouldn't need to know about three different data formats — they just want a consistent get_vitals() call. Each source gets its own Adapter that converts its native format into your platform's unified internal schema before it ever touches Postgres or the model.
